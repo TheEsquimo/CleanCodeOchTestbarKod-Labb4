@@ -1,2 +1,0 @@
-# CleanCodeOchTestbarKod-Labb4
- 
