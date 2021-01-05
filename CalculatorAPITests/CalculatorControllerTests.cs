@@ -6,18 +6,11 @@ namespace CalculatorAPITests
 {
     public class CalculatorControllerTests
     {
-        CalculatorController calculatorController;
-
-        [SetUp]
-        public void Setup()
-        {
-            calculatorController = new CalculatorController();
-        }
 
         [Test]
         public void GivenTwoNumbers_ReturnsPercentagesOfTotal()
         {
-            double[] actual = calculatorController.GetPercentagesOfTotal(5, 15);
+            double[] actual = Calculator.GetPercentagesOfTotal(5, 15);
             double[] expected = new double[]
             {
                 25,
@@ -32,14 +25,14 @@ namespace CalculatorAPITests
         [TestCase(-45, -9)]
         public void GivenNegativeNumber_ThrowsException(int a, int b)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => calculatorController.GetPercentagesOfTotal(a, b));
+            Assert.Throws<ArgumentOutOfRangeException>(() => Calculator.GetPercentagesOfTotal(a, b));
         }
 
         [Test]
         public void GivenTwoValuesOfZero_ReturnsArrayOfZeroes()
         {
             double[] expected = new double[] { 0, 0 };
-            Assert.AreEqual(expected, calculatorController.GetPercentagesOfTotal(0, 0));
+            Assert.AreEqual(expected, Calculator.GetPercentagesOfTotal(0, 0));
         }
 
         [Test]
@@ -47,8 +40,8 @@ namespace CalculatorAPITests
         {
             double[] expected = new double[] { 100, 0 };
             double[] expectedTwo = new double[] { 0, 100 };
-            Assert.AreEqual(expected, calculatorController.GetPercentagesOfTotal(25, 0));
-            Assert.AreEqual(expectedTwo, calculatorController.GetPercentagesOfTotal(0, 75));
+            Assert.AreEqual(expected, Calculator.GetPercentagesOfTotal(25, 0));
+            Assert.AreEqual(expectedTwo, Calculator.GetPercentagesOfTotal(0, 75));
         }
     }
 }
