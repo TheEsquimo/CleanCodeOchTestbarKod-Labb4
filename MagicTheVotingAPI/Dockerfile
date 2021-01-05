@@ -20,7 +20,7 @@ RUN sudo apt-get -y update
 RUN sudo apt-get -y upgrade
 RUN sudo apt-get install -y sqlite3 libsqlite3-dev
 RUN mkdir /db
-RUN /usr/bin/sqlite3 /db/magic-cards.db
+RUN /usr/bin/sqlite3 /db/MagicTheVotingAPIContext-07873d17-ecb3-4901-a581-78fec7b2ddb4.db
 CMD /bin/bash
 WORKDIR /app
 COPY --from=publish /app/publish .
