@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorAPI", "Calculator
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorAPITests", "CalculatorAPITests\CalculatorAPITests.csproj", "{AD1AFF9F-BAAC-4906-AA08-7FEBD2DFD11D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicTheVotingAPI", "MagicTheVotingAPI\MagicTheVotingAPI.csproj", "{EA834AC6-A171-48F3-A530-1851FC01EDBA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{AD1AFF9F-BAAC-4906-AA08-7FEBD2DFD11D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD1AFF9F-BAAC-4906-AA08-7FEBD2DFD11D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD1AFF9F-BAAC-4906-AA08-7FEBD2DFD11D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA834AC6-A171-48F3-A530-1851FC01EDBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA834AC6-A171-48F3-A530-1851FC01EDBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA834AC6-A171-48F3-A530-1851FC01EDBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA834AC6-A171-48F3-A530-1851FC01EDBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
