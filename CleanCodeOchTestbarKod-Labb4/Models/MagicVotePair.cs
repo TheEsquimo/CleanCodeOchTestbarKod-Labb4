@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MagicTheVotingAPI
+namespace CleanCodeOchTestbarKod_Labb4
 {
     public class MagicVotePair
     {

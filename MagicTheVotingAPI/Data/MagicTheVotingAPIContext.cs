@@ -13,8 +13,6 @@ namespace MagicTheVotingAPI
             : base(options)
         {
         }
-
-        public DbSet<MagicCard> MagicCard { get; set; }
         public DbSet<MagicVotePair> MagicVotePair { get; set; }
     }
 }

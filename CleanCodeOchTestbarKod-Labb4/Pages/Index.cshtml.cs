@@ -28,6 +28,8 @@ namespace CleanCodeOchTestbarKod_Labb4.Pages
                 var response = await client.SendAsync(request);
                 PercentagePair percentagePair = await GameController.GetPercentagesOfValuesTotal(5, 10);
                 ViewData["Message"] += " and " + percentagePair.PercentageAWithPercentageSymbol + " " + percentagePair.PercentageBWithPercentageSymbol;
+                MagicVotePair magicVotePair = await GameController.GetRandomMagicVotePair();
+                ViewData["CardALink"] = magicVotePair.CardA;
             }
         }
     }

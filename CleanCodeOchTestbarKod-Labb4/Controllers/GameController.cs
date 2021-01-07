@@ -15,5 +15,12 @@ namespace CleanCodeOchTestbarKod_Labb4
             PercentagePair percentagePair = new PercentagePair(percentages[0], percentages[1]);
             return percentagePair;
         }
+
+        public static async Task<MagicVotePair> GetRandomMagicVotePair()
+        {
+            var client = new Client(new Uri($"http://magicthevotingapi/magiccards/"));
+            MagicVotePair randomMagicVotePair = await client.GetAsync<MagicVotePair>();
+            return randomMagicVotePair;
+        }
     }
 }
