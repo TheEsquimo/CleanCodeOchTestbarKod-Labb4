@@ -17,9 +17,19 @@ namespace CleanCodeOchTestbarKod_Labb4.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
+            ViewData["Message"] = "Hello from webfrontend";
 
+            using (var client = new System.Net.Http.HttpClient())
+            {
+                // Call *mywebapi*, and display its response in the page
+                var request = new System.Net.Http.HttpRequestMessage();
+                // request.RequestUri = new Uri("http://mywebapi/WeatherForecast"); // ASP.NET 3 (VS 2019 only)
+                request.RequestUri = new Uri("http://calculatorapi/calculator?a=5&b=10"); // ASP.NET 2.x
+                var response = await client.SendAsync(request);
+                ViewData["Message"] += " and " + await response.Content.ReadAsStringAsync();
+            }
         }
     }
 }
