@@ -40,7 +40,6 @@ namespace CleanCodeOchTestbarKod_Labb4
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
