@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanCodeOchTestbarKod-Labb4", "CleanCodeOchTestbarKod-Labb4\CleanCodeOchTestbarKod-Labb4.csproj", "{298CB60E-6086-44FA-8A4D-ABBF92A5FCB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorAPI", "CalculatorAPI\CalculatorAPI.csproj", "{FDE11710-164B-402C-BC0F-B139E11B250C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculatorAPI", "CalculatorAPI\CalculatorAPI.csproj", "{FDE11710-164B-402C-BC0F-B139E11B250C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorAPITests", "CalculatorAPITests\CalculatorAPITests.csproj", "{AD1AFF9F-BAAC-4906-AA08-7FEBD2DFD11D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculatorAPITests", "CalculatorAPITests\CalculatorAPITests.csproj", "{AD1AFF9F-BAAC-4906-AA08-7FEBD2DFD11D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicTheVotingAPI", "MagicTheVotingAPI\MagicTheVotingAPI.csproj", "{EA834AC6-A171-48F3-A530-1851FC01EDBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicTheVotingAPI", "MagicTheVotingAPI\MagicTheVotingAPI.csproj", "{EA834AC6-A171-48F3-A530-1851FC01EDBA}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0047B26A-3039-4895-99D1-5A86EBD984D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{EA834AC6-A171-48F3-A530-1851FC01EDBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA834AC6-A171-48F3-A530-1851FC01EDBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA834AC6-A171-48F3-A530-1851FC01EDBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0047B26A-3039-4895-99D1-5A86EBD984D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0047B26A-3039-4895-99D1-5A86EBD984D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0047B26A-3039-4895-99D1-5A86EBD984D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0047B26A-3039-4895-99D1-5A86EBD984D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
