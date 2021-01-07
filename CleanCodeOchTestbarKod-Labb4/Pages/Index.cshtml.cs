@@ -24,9 +24,10 @@ namespace CleanCodeOchTestbarKod_Labb4.Pages
             using (var client = new System.Net.Http.HttpClient())
             {
                 var request = new System.Net.Http.HttpRequestMessage();
-                request.RequestUri = new Uri("http://calculatorapi/calculator?a=5&b=10"); // ASP.NET 2.x
+                request.RequestUri = new Uri("http://calculatorapi/calculator?a=5&b=10");
                 var response = await client.SendAsync(request);
-                ViewData["Message"] += " and " + await GameController.GetPercentagesOfValuesTotal(5, 10);
+                PercentagePair percentagePair = await GameController.GetPercentagesOfValuesTotal(5, 10);
+                ViewData["Message"] += " and " + percentagePair.PercentageAWithPercentageSymbol + " " + percentagePair.PercentageBWithPercentageSymbol;
             }
         }
     }

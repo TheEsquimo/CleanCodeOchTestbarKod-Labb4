@@ -9,44 +9,22 @@ namespace CleanCodeOchTestbarKod_Labb4
     {
         public PercentagePair(double percentageA, double percentageB)
         {
-            this.percentageA = percentageA;
-            this.percentageB = percentageB;
+            PercentageA = percentageA;
+            PercentageB = percentageB;
         }
 
-        public string PercentageA
+        public string PercentageAWithPercentageSymbol
         {
-            get { return DoubleToPercentageString(percentageA); }
-            set
-            {
-                try
-                {
-                    percentageA = double.Parse(value);
-                }
-                catch
-                {
-                    throw new InvalidCastException();
-                }
-            }
+            get { return DoubleToPercentageString(PercentageA); }
         }
 
-        public string PercentageB
+        public string PercentageBWithPercentageSymbol
         {
-            get { return DoubleToPercentageString(percentageB); }
-            set
-            {
-                try
-                {
-                    percentageB = double.Parse(value);
-                }
-                catch
-                {
-                    throw new InvalidCastException();
-                }
-            }
+            get { return DoubleToPercentageString(PercentageB); }
         }
 
-        private double percentageA;
-        private double percentageB;
+        public double PercentageA { get; set; }
+        private double PercentageB { get; set; }
 
 
         private string DoubleToPercentageString(double value)

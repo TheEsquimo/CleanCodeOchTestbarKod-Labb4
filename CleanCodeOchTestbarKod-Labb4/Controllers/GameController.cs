@@ -11,7 +11,8 @@ namespace CleanCodeOchTestbarKod_Labb4
         public static async Task<PercentagePair> GetPercentagesOfValuesTotal(double valueA, double valueB)
         {
             var client = new Client(new Uri($"http://calculatorapi/calculator?a={valueA}&b={valueB}"));
-            PercentagePair percentagePair = await client.GetAsync<PercentagePair>();
+            double[] percentages = await client.GetAsync<double[]>();
+            PercentagePair percentagePair = new PercentagePair(percentages[0], percentages[1]);
             return percentagePair;
         }
     }
