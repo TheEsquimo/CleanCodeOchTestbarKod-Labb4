@@ -26,16 +26,7 @@ namespace CleanCodeOchTestbarKod_Labb4.Pages
 
         public async Task OnGet()
         {
-            ViewData["Message"] = "Hello from webfrontend";
-            ViewData["MagicQuote"] = "";
-
-            using (var client = new System.Net.Http.HttpClient())
-            {
-                var request = new System.Net.Http.HttpRequestMessage();
-                request.RequestUri = new Uri("http://calculatorapi/calculator?a=5&b=10");
-                var response = await client.SendAsync(request);
-                UpdateCardImagesToCurrentCardPair();
-            }
+            UpdateCardImagesToCurrentCardPair();
         }
 
         public async Task OnPostUserVoted(string cardVotedOn)
