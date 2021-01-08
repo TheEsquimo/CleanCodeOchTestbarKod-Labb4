@@ -12,10 +12,15 @@ namespace CleanCodeOchTestbarKod_Labb4
         private static MagicVotePair currentMagicVotePair = GetRandomMagicVotePair().Result;
         private static string currentMagicQuote;
 
-        public static async void OnUserVoted(string cardVotedOn)
+        public static void OnUserVoted(string cardVotedOn)
         {
             RegisterVoteOnCurrentVotePair(cardVotedOn);
             currentMagicQuote = GetRandomMagicQuote().Result;
+        }
+
+        public static void OnUserRequestNewCardPair()
+        {
+            currentMagicVotePair = GetRandomMagicVotePair().Result;
         }
         
         private static async void RegisterVoteOnCurrentVotePair(string cardVotedOn)

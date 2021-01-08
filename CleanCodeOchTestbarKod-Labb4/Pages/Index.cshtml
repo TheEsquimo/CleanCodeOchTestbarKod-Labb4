@@ -25,12 +25,20 @@
     }
     else
     {
-      <div class="float-left">
+      <div class="align-middle">
+        <div class="float-left">
         <img src=@Model.CardImageA />
+        <p>@Model.CardVoteDistributionPercentages.PercentageAWithPercentageSymbol</p>
+        </div>
+        <div class="float-left">
+            <img src=@Model.CardImageB />
+            <p>@Model.CardVoteDistributionPercentages.PercentageBWithPercentageSymbol</p>
+        </div>
       </div>
-      <div class="float-left">
-        <img src=@Model.CardImageB />
+      <div class="float-none">
+        <form asp-page-handler="RequestNewCardPair">
+          <button>Next</button>
+        </form>
       </div>
-      <button>Next</button>
     }
 </div>
