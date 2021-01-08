@@ -22,3 +22,10 @@ services:
     ports:
       - "80"
 
+
+  magicthequotesapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+

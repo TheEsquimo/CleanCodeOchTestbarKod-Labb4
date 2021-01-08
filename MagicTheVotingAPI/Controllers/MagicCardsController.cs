@@ -11,7 +11,11 @@ namespace MagicTheVotingAPI
     [Route("[controller]")]
     public class MagicCardsController : ControllerBase
     {
-        private readonly string magicCardsFilePath = Path.Combine(Environment.CurrentDirectory, @"Data/magic-cards.json");
+        private readonly string magicCardsFilePath;
+        public MagicCardsController()
+        {
+            magicCardsFilePath = Path.Combine(Environment.CurrentDirectory, @"Data/magic-cards.json");
+        }
 
         [HttpGet]
         public async Task<ActionResult<MagicVotePair>> GetMagicVotePair()

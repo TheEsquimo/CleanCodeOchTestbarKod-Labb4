@@ -22,3 +22,10 @@ services:
       context: .
       dockerfile: MagicTheVotingAPI/Dockerfile
 
+
+  magicthequotesapi:
+    image: ${DOCKER_REGISTRY-}magicthequotesapi
+    build:
+      context: .
+      dockerfile: MagicTheQuotesAPI/Dockerfile
+
