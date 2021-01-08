@@ -20,19 +20,18 @@ namespace MagicTheQuotesAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<string>> GetMagicQuote()
         {
-            List<string> magicQuotes = GetMagicQuotesFromJsonFile();
-            if (magicQuotes.Count == 0)
+            string[] magicQuotes = GetMagicQuotesFromJsonFile();
+            if (magicQuotes.Length == 0)
                 return NoContent();
 
             Random random = new Random();
-            string randomMagicQuote = magicQuotes[random.Next(magicQuotes.Count)];
+            string randomMagicQuote = magicQuotes[random.Next(magicQuotes.Length)];
             return randomMagicQuote;
         }
-        private List<string> GetMagicQuotesFromJsonFile()
+        private string[] GetMagicQuotesFromJsonFile()
         {
             string json = System.IO.File.ReadAllText(magicQuotesFilePath);
-            List<string> magicQuotes = new List<string>();
-            JsonConvert.PopulateObject(json, magicQuotes);
+            string[] magicQuotes = JsonConvert.DeserializeObject<string[]>(json);
             return magicQuotes;
         }
     }
