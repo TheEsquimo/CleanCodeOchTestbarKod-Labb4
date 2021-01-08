@@ -17,6 +17,7 @@ namespace CleanCodeOchTestbarKod_Labb4.Pages
         public async Task OnGet()
         {
             ViewData["Message"] = "Hello from webfrontend";
+            ViewData["MagicQuote"] = "";
 
             using (var client = new System.Net.Http.HttpClient())
             {
@@ -27,6 +28,8 @@ namespace CleanCodeOchTestbarKod_Labb4.Pages
                 ViewData["Message"] += " and " + percentagePair.PercentageAWithPercentageSymbol + " " + percentagePair.PercentageBWithPercentageSymbol;
                 MagicVotePair magicVotePair = await GameController.GetRandomMagicVotePair();
                 ViewData["CardALink"] = magicVotePair.CardA;
+                string randomMagicQuote = await GameController.GetRandomMagicQuote();
+                ViewData["MagicQuote"] = randomMagicQuote;
             }
         }
     }

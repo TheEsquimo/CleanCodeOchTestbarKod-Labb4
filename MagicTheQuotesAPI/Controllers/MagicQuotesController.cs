@@ -17,21 +17,26 @@ namespace MagicTheQuotesAPI.Controllers
         {
             magicQuotesFilePath = Path.Combine(Environment.CurrentDirectory, @"Data/magic-quotes.json");
         }
+
         [HttpGet]
         public async Task<ActionResult<string>> GetMagicQuote()
         {
-            string[] magicQuotes = GetMagicQuotesFromJsonFile();
-            if (magicQuotes.Length == 0)
+            MagicQuotes magicQuotes = GetMagicQuotesFromJsonFile();
+            if (magicQuotes.Quotes.Length == 0)
                 return NoContent();
 
             Random random = new Random();
-            string randomMagicQuote = magicQuotes[random.Next(magicQuotes.Length)];
-            return randomMagicQuote;
+            string randomMagicQuote = magicQuotes.Quotes[random.Next(magicQuotes.Quotes.Length)];
+            if (string.IsNullOrEmpty(randomMagicQuote))
+                return NotFound();
+            return Ok(randomMagicQuote);
         }
-        private string[] GetMagicQuotesFromJsonFile()
+
+        private MagicQuotes GetMagicQuotesFromJsonFile()
         {
             string json = System.IO.File.ReadAllText(magicQuotesFilePath);
-            string[] magicQuotes = JsonConvert.DeserializeObject<string[]>(json);
+            MagicQuotes magicQuotes = new MagicQuotes();
+            JsonConvert.PopulateObject(json, magicQuotes);
             return magicQuotes;
         }
     }

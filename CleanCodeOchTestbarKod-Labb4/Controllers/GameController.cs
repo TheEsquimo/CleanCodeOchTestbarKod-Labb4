@@ -20,5 +20,12 @@ namespace CleanCodeOchTestbarKod_Labb4
             MagicVotePair randomMagicVotePair = await client.GetAsync<MagicVotePair>();
             return randomMagicVotePair;
         }
+
+        public static async Task<string> GetRandomMagicQuote()
+        {
+            var client = new Client(new Uri($"http://magicthequotesapi/magicquotes/"));
+            string randomMagicQuote = await client.GetAsync<string>();
+            return randomMagicQuote;
+        }
     }
 }
