@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +13,7 @@ namespace MagicTheVotingAPI
     public class MagicCardsController : ControllerBase
     {
         private readonly MagicTheVotingAPIContext _context;
-        private readonly string magicCardsFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data\magic-cards.json");
-
-
+        private readonly string magicCardsFilePath = Path.Combine(Environment.CurrentDirectory, @"Data/magic-cards.json");
 
         public MagicCardsController(MagicTheVotingAPIContext context)
         {
@@ -27,93 +23,57 @@ namespace MagicTheVotingAPI
         [HttpGet]
         public async Task<ActionResult<MagicVotePair>> GetMagicVotePair()
         {
-            using (StreamReader streamReader = new StreamReader(magicCardsFilePath))
+            MagicVotePairs magicVotePairs = GetMagicVotePairsFromJsonFile();
+            if (magicVotePairs.MagicVotePairList.Length == 0)
+                return NoContent();
+
+            Random random = new Random();
+            MagicVotePair randomMagicVotePair = magicVotePairs.MagicVotePairList[random.Next(magicVotePairs.MagicVotePairList.Length)];
+            return randomMagicVotePair;
+        }
+
+        [HttpPut("{id}, {cardToGetVote}")]
+        public async Task<IActionResult> PutMagicVotePair(int id, string cardToGetVote)
+        {
+            cardToGetVote = cardToGetVote.ToUpper();
+            MagicVotePairs magicVotePairs = GetMagicVotePairsFromJsonFile();
+
+            if (magicVotePairs.MagicVotePairList.Length == 0)
+                return NoContent();
+
+            MagicVotePair pairToModify = magicVotePairs.MagicVotePairList.Where(votePair => votePair.Id == id).FirstOrDefault();
+            if (pairToModify == null)
+                return NotFound();
+
+            if (cardToGetVote != "A" && cardToGetVote != "B")
+                return BadRequest("Invalid input of card to vote. Must be either A or B.");
+
+            if (cardToGetVote == "A")
+                pairToModify.CardAVotes++;
+            else
+                pairToModify.CardBVotes++;
+
+            using (StreamWriter file = System.IO.File.CreateText(magicCardsFilePath))
             {
-                string json = streamReader.ReadToEnd();
-                MagicVotePair[] magicVotePairs = JsonConvert.DeserializeObject<MagicVotePair[]>(json);
-                Random random = new Random();
-                MagicVotePair randomMagicVotePair = magicVotePairs[random.Next(magicVotePairs.Length)];
-                return randomMagicVotePair;
+                JsonSerializer serializer = new JsonSerializer();
+                try
+                {
+                    serializer.Serialize(file, magicVotePairs);
+                    return Ok(pairToModify);
+                }
+                catch
+                {
+                    return StatusCode(500);
+                }
             }
         }
 
-        // GET: api/MagicCards/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<MagicVotePair>> GetMagicVotePair(int id)
-        //{
-        //    var magicCard = await _context.MagicCard.FindAsync(id);
-
-        //    if (magicCard == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return magicCard;
-        //}
-
-        // PUT: api/MagicCards/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutMagicCard(int id, MagicCard magicCard)
-        //{
-        //    if (id != magicCard.MultiverseId)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(magicCard).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!MagicCardExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
-        //// POST: api/MagicCards
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for
-        //// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        //[HttpPost]
-        //public async Task<ActionResult<MagicCard>> PostMagicCard(MagicCard magicCard)
-        //{
-        //    _context.MagicCard.Add(magicCard);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetMagicCard", new { id = magicCard.MultiverseId }, magicCard);
-        //}
-
-        //// DELETE: api/MagicCards/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<MagicCard>> DeleteMagicCard(int id)
-        //{
-        //    var magicCard = await _context.MagicCard.FindAsync(id);
-        //    if (magicCard == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.MagicCard.Remove(magicCard);
-        //    await _context.SaveChangesAsync();
-
-        //    return magicCard;
-        //}
-
-        //private bool MagicCardExists(int id)
-        //{
-        //    return _context.MagicCard.Any(e => e.MultiverseId == id);
-        //}
+        private MagicVotePairs GetMagicVotePairsFromJsonFile()
+        {
+            string json = System.IO.File.ReadAllText(magicCardsFilePath);
+            MagicVotePairs magicVotePairs = new MagicVotePairs();
+            JsonConvert.PopulateObject(json, magicVotePairs);
+            return magicVotePairs;
+        }
     }
 }

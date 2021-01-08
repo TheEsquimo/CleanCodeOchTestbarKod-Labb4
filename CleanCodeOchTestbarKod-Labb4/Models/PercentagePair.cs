@@ -24,7 +24,7 @@ namespace CleanCodeOchTestbarKod_Labb4
         }
 
         public double PercentageA { get; set; }
-        private double PercentageB { get; set; }
+        public double PercentageB { get; set; }
 
 
         private string DoubleToPercentageString(double value)
