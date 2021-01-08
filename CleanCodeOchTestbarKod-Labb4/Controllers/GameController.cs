@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using RestClient.Net;
+﻿using RestClient.Net;
+using System;
 using System.Threading.Tasks;
 
 namespace CleanCodeOchTestbarKod_Labb4

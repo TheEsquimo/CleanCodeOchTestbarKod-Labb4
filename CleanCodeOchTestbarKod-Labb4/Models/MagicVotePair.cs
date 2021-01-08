@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CleanCodeOchTestbarKod_Labb4
+﻿namespace CleanCodeOchTestbarKod_Labb4
 {
     public class MagicVotePair
     {

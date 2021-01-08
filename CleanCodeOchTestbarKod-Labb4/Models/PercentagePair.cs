@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CleanCodeOchTestbarKod_Labb4
+﻿namespace CleanCodeOchTestbarKod_Labb4
 {
     public class PercentagePair
     {
