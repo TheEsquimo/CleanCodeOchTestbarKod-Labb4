@@ -12,13 +12,7 @@ namespace MagicTheVotingAPI
     [Route("[controller]")]
     public class MagicCardsController : ControllerBase
     {
-        private readonly MagicTheVotingAPIContext _context;
         private readonly string magicCardsFilePath = Path.Combine(Environment.CurrentDirectory, @"Data/magic-cards.json");
-
-        public MagicCardsController(MagicTheVotingAPIContext context)
-        {
-            _context = context;
-        }
 
         [HttpGet]
         public async Task<ActionResult<MagicVotePair>> GetMagicVotePair()
@@ -32,7 +26,7 @@ namespace MagicTheVotingAPI
             return randomMagicVotePair;
         }
 
-        [HttpPut("{id}, {cardToGetVote}")]
+        [HttpPut]
         public async Task<IActionResult> PutMagicVotePair(int id, string cardToGetVote)
         {
             cardToGetVote = cardToGetVote.ToUpper();

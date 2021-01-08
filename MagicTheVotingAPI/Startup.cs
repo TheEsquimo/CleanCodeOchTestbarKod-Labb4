@@ -26,9 +26,6 @@ namespace MagicTheVotingAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-            services.AddDbContext<MagicTheVotingAPIContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("MagicTheVotingAPIContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
