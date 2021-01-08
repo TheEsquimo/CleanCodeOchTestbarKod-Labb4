@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
@@ -8,6 +9,13 @@ namespace CleanCodeOchTestbarKod_Labb4.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        
+        [ViewData]
+        public string CardImageA { get; set; }
+        [ViewData]
+        public string CardImageB { get; set; }
+        [ViewData]
+        public bool HasVoted { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -24,13 +32,16 @@ namespace CleanCodeOchTestbarKod_Labb4.Pages
                 var request = new System.Net.Http.HttpRequestMessage();
                 request.RequestUri = new Uri("http://calculatorapi/calculator?a=5&b=10");
                 var response = await client.SendAsync(request);
-                PercentagePair percentagePair = await GameController.GetPercentagesOfValuesTotal(5, 10);
-                ViewData["Message"] += " and " + percentagePair.PercentageAWithPercentageSymbol + " " + percentagePair.PercentageBWithPercentageSymbol;
-                MagicVotePair magicVotePair = await GameController.GetRandomMagicVotePair();
-                ViewData["CardALink"] = magicVotePair.CardA;
-                string randomMagicQuote = await GameController.GetRandomMagicQuote();
-                ViewData["MagicQuote"] = randomMagicQuote;
+                MagicMultiverseIdConverter multiverseConverter = new MagicMultiverseIdConverter();
+                CardImageA = multiverseConverter.ConvertMultiverseIdToImageLink(GameController.CurrentMagicVotePair.CardA);
+                CardImageB = multiverseConverter.ConvertMultiverseIdToImageLink(GameController.CurrentMagicVotePair.CardB);
             }
+        }
+
+        public async Task OnPostUserVoted(string cardVotedOn)
+        {
+            GameController.OnUserVoted(cardVotedOn);
+            HasVoted = true;
         }
     }
 }

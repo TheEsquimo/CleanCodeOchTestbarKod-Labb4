@@ -6,9 +6,31 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <img src=@ViewData["CardALink"]/>
-    <p>@ViewData["Message"]</p>
-    <p>@ViewData["MagicQuote"]</p>
+    @if (!Model.HasVoted)
+    {
+      <div class="float-left">
+        <form asp-page-handler="UserVoted" asp-route-cardVotedOn="A">
+          <button>
+              <img src=@Model.CardImageA />
+          </button>
+        </form>
+      </div>
+      <div class="float-left">
+        <form asp-page-handler="UserVoted" asp-route-cardVotedOn="B">
+          <button>
+            <img src=@Model.CardImageB />
+          </button>
+        </form>
+      </div>
+    }
+    else
+    {
+      <div class="float-left">
+        <img src=@Model.CardImageA />
+      </div>
+      <div class="float-left">
+        <img src=@Model.CardImageB />
+      </div>
+      <button>Next</button>
+    }
 </div>
