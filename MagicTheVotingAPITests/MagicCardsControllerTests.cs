@@ -3,6 +3,8 @@ using MagicTheVotingAPI;
 using Newtonsoft.Json;
 using System.IO;
 using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MagicTheVotingAPITests
 {
@@ -14,13 +16,23 @@ namespace MagicTheVotingAPITests
         [SetUp]
         public void Setup()
         {
-            //magicCardsController = new MagicCardsController(magicCardsFilePath);
+            magicCardsController = new MagicCardsController();
         }
 
         [Test]
-        public void GivenAPathToAJsonFileOfCorrectFormat_ReturnsObjectFromIt()
+        public void GivenAJsonFileOfCorrectFormat_ReturnsOkHTTPCode()
         {
-            //MagicVotePair result = magicCardsController.GetMagicVotePair().Result.Value;
+            var mockFile = new MockFileReturningCorrectlyFormattedMagicVotePairJson();
+            var actual = magicCardsController.GetMagicVotePair(mockFile);
+            Assert.AreEqual(typeof(OkObjectResult), actual.Result.Result.GetType());
+        }
+
+        [Test]
+        public void GivenAJsonFileOfEmptyArray_ReturnsNoContentHTTPCode()
+        {
+            var mockFile = new MockFileReturningEmptyJsonArray();
+            var actual = magicCardsController.GetMagicVotePair(mockFile);
+            Assert.AreEqual(typeof(NoContentResult), actual.Result.Result.GetType());
         }
 
         //private MagicVotePairs GetMagicVotePairsFromJsonFile()

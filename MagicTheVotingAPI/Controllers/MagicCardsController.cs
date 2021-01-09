@@ -12,25 +12,20 @@ namespace MagicTheVotingAPI
     public class MagicCardsController : ControllerBase
     {
         private readonly string magicCardsFilePath;
-        private IFile file;
 
-        public MagicCardsController(IFile? file, string? path)
+        public MagicCardsController()
         {
-            if (file != null)
-                this.file = file;
-            else
-                this.file = new File();
-
-            if (path != null)
-                magicCardsFilePath = path;
-            else
-                magicCardsFilePath = Path.Combine(Environment.CurrentDirectory, @"Data/magic-cards.json");
+            magicCardsFilePath = Path.Combine(Environment.CurrentDirectory, @"Data/magic-cards.json");
         }
 
         [HttpGet]
         public async Task<ActionResult<MagicVotePair>> GetMagicVotePair()
         {
-            MagicVotePairs magicVotePairs = GetMagicVotePairsFromJsonFile();
+            return GetMagicVotePair(new File()).Result;
+        }
+        public async Task<ActionResult<MagicVotePair>> GetMagicVotePair(IFile file)
+        {
+            MagicVotePairs magicVotePairs = GetMagicVotePairsFromJsonFile(file);
             if (magicVotePairs.MagicVotePairList.Length == 0)
                 return NoContent();
 
@@ -43,7 +38,7 @@ namespace MagicTheVotingAPI
         public async Task<IActionResult> PutMagicVotePair(int id, string cardToGetVote)
         {
             cardToGetVote = cardToGetVote.ToUpper();
-            MagicVotePairs magicVotePairs = GetMagicVotePairsFromJsonFile();
+            MagicVotePairs magicVotePairs = GetMagicVotePairsFromJsonFile(new File());
 
             if (magicVotePairs.MagicVotePairList.Length == 0)
                 return NoContent();
@@ -60,7 +55,7 @@ namespace MagicTheVotingAPI
             else
                 pairToModify.CardBVotes++;
 
-            using (StreamWriter streamWriterFile = file.CreateText(magicCardsFilePath))
+            using (StreamWriter streamWriterFile = new File().CreateText(magicCardsFilePath))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 try
@@ -75,7 +70,7 @@ namespace MagicTheVotingAPI
             }
         }
 
-        private MagicVotePairs GetMagicVotePairsFromJsonFile()
+        private MagicVotePairs GetMagicVotePairsFromJsonFile(IFile file)
         {
             string json = file.ReadAllText(magicCardsFilePath);
             MagicVotePairs magicVotePairs = new MagicVotePairs();
