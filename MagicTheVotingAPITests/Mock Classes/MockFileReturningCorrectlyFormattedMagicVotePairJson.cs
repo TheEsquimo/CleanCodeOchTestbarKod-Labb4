@@ -7,7 +7,7 @@ namespace MagicTheVotingAPITests
     {
         public StreamWriter CreateText(string path)
         {
-            throw new System.NotImplementedException();
+            return new StreamWriter(path);
         }
 
         public string ReadAllText(string path)

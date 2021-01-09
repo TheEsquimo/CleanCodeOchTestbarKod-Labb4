@@ -37,8 +37,13 @@ namespace MagicTheVotingAPI
         [HttpPut]
         public async Task<IActionResult> PutMagicVotePair(int id, string cardToGetVote)
         {
+            return PutMagicVotePair(id, cardToGetVote, new File(), magicCardsFilePath).Result;
+        }
+
+        public async Task<IActionResult> PutMagicVotePair(int id, string cardToGetVote, IFile file, string filePath)
+        {
             cardToGetVote = cardToGetVote.ToUpper();
-            MagicVotePairs magicVotePairs = GetMagicVotePairsFromJsonFile(new File());
+            MagicVotePairs magicVotePairs = GetMagicVotePairsFromJsonFile(file);
 
             if (magicVotePairs.MagicVotePairList.Length == 0)
                 return NoContent();
@@ -55,7 +60,7 @@ namespace MagicTheVotingAPI
             else
                 pairToModify.CardBVotes++;
 
-            using (StreamWriter streamWriterFile = new File().CreateText(magicCardsFilePath))
+            using (StreamWriter streamWriterFile = file.CreateText(filePath))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 try

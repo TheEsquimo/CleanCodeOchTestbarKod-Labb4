@@ -31,16 +31,28 @@ namespace MagicTheVotingAPITests
         public void GivenAJsonFileOfEmptyArray_ReturnsNoContentHTTPCode()
         {
             var mockFile = new MockFileReturningEmptyJsonArray();
-            var actual = magicCardsController.GetMagicVotePair(mockFile);
-            Assert.AreEqual(typeof(NoContentResult), actual.Result.Result.GetType());
+            mockFile.MagicVotePairId = 1;
+            mockFile.CardToVoteOn = "a";
+            var actualGet = magicCardsController.GetMagicVotePair(mockFile);
+            var actualPut = magicCardsController.PutMagicVotePair(mockFile.MagicVotePairId, mockFile.CardToVoteOn, mockFile, null);
+            Assert.AreEqual(typeof(NoContentResult), actualGet.Result.Result.GetType());
+            Assert.AreEqual(typeof(NoContentResult), actualPut.Result.GetType());
         }
 
-        //private MagicVotePairs GetMagicVotePairsFromJsonFile()
-        //{
-        //    //string json = File.ReadAllText(magicCardsFilePath);
-        //    //MagicVotePairs magicVotePairs = new MagicVotePairs();
-        //    //JsonConvert.PopulateObject(json, magicVotePairs);
-        //    //return magicVotePairs;
-        //}
+        [Test]
+        public void GivenAnIdAndJsonFileNotContaintingThatId_ReturnsNotFoundHTTPCode()
+        {
+            var mockFile = new MockFileReturningCorrectlyFormattedMagicVotePairJson();
+            var actual = magicCardsController.PutMagicVotePair(3, "A", mockFile, null);
+            Assert.AreEqual(typeof(NotFoundResult), actual.Result.GetType());
+        }
+
+        [Test]
+        public void NotGivenAorBAsCardToVoteOn_ReturnsBadRequestHTTPCode()
+        {
+            var mockFile = new MockFileReturningCorrectlyFormattedMagicVotePairJson();
+            var actual = magicCardsController.PutMagicVotePair(1, "k", mockFile, null);
+            Assert.AreEqual(typeof(BadRequestObjectResult), actual.Result.GetType());
+        }
     }
 }
