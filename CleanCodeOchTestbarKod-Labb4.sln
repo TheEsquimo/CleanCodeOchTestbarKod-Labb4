@@ -13,11 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicTheVotingAPI", "MagicT
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0047B26A-3039-4895-99D1-5A86EBD984D2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanCodeOchTestbarKod-Labb4Tests", "CleanCodeOchTestbarKod-Labb4Tests\CleanCodeOchTestbarKod-Labb4Tests.csproj", "{60E0DBA3-28EA-4870-848C-7614508CEB40}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicTheQuotesAPI", "MagicTheQuotesAPI\MagicTheQuotesAPI.csproj", "{1846B93C-7128-4D15-ACC8-8F1E5D6B4455}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicTheVotingAPITests", "MagicTheVotingAPITests\MagicTheVotingAPITests.csproj", "{DEE0B01C-DDED-436F-A243-EC57273AB472}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicTheVotingAPITests", "MagicTheVotingAPITests\MagicTheVotingAPITests.csproj", "{DEE0B01C-DDED-436F-A243-EC57273AB472}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicTheQuotesAPITests", "MagicTheQuotesAPITests\MagicTheQuotesAPITests.csproj", "{72023B09-3F1F-4900-BCE6-C467A7372DC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +45,6 @@ Global
 		{0047B26A-3039-4895-99D1-5A86EBD984D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0047B26A-3039-4895-99D1-5A86EBD984D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0047B26A-3039-4895-99D1-5A86EBD984D2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60E0DBA3-28EA-4870-848C-7614508CEB40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60E0DBA3-28EA-4870-848C-7614508CEB40}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60E0DBA3-28EA-4870-848C-7614508CEB40}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60E0DBA3-28EA-4870-848C-7614508CEB40}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1846B93C-7128-4D15-ACC8-8F1E5D6B4455}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1846B93C-7128-4D15-ACC8-8F1E5D6B4455}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1846B93C-7128-4D15-ACC8-8F1E5D6B4455}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,6 +53,10 @@ Global
 		{DEE0B01C-DDED-436F-A243-EC57273AB472}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEE0B01C-DDED-436F-A243-EC57273AB472}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEE0B01C-DDED-436F-A243-EC57273AB472}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72023B09-3F1F-4900-BCE6-C467A7372DC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72023B09-3F1F-4900-BCE6-C467A7372DC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72023B09-3F1F-4900-BCE6-C467A7372DC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72023B09-3F1F-4900-BCE6-C467A7372DC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

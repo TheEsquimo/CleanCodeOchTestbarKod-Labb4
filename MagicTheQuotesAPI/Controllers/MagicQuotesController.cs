@@ -1,12 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
-namespace MagicTheQuotesAPI.Controllers
+namespace MagicTheQuotesAPI
 {
     [ApiController]
     [Route("[controller]")]
@@ -21,7 +19,12 @@ namespace MagicTheQuotesAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<string>> GetMagicQuote()
         {
-            MagicQuotes magicQuotes = GetMagicQuotesFromJsonFile();
+            return GetMagicQuote(new File()).Result;
+        }
+
+        public async Task<ActionResult<string>> GetMagicQuote(IFile file)
+        {
+            MagicQuotes magicQuotes = GetMagicQuotesFromJsonFile(file);
             if (magicQuotes.Quotes.Length == 0)
                 return NoContent();
 
@@ -32,9 +35,9 @@ namespace MagicTheQuotesAPI.Controllers
             return Ok(randomMagicQuote);
         }
 
-        private MagicQuotes GetMagicQuotesFromJsonFile()
+        private MagicQuotes GetMagicQuotesFromJsonFile(IFile file)
         {
-            string json = System.IO.File.ReadAllText(magicQuotesFilePath);
+            string json = file.ReadAllText(magicQuotesFilePath);
             MagicQuotes magicQuotes = new MagicQuotes();
             JsonConvert.PopulateObject(json, magicQuotes);
             return magicQuotes;
