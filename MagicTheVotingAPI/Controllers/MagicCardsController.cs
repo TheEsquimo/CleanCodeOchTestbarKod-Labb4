@@ -12,9 +12,19 @@ namespace MagicTheVotingAPI
     public class MagicCardsController : ControllerBase
     {
         private readonly string magicCardsFilePath;
-        public MagicCardsController()
+        private IFile file;
+
+        public MagicCardsController(IFile? file, string? path)
         {
-            magicCardsFilePath = Path.Combine(Environment.CurrentDirectory, @"Data/magic-cards.json");
+            if (file != null)
+                this.file = file;
+            else
+                this.file = new File();
+
+            if (path != null)
+                magicCardsFilePath = path;
+            else
+                magicCardsFilePath = Path.Combine(Environment.CurrentDirectory, @"Data/magic-cards.json");
         }
 
         [HttpGet]
@@ -26,7 +36,7 @@ namespace MagicTheVotingAPI
 
             Random random = new Random();
             MagicVotePair randomMagicVotePair = magicVotePairs.MagicVotePairList[random.Next(magicVotePairs.MagicVotePairList.Length)];
-            return randomMagicVotePair;
+            return Ok(randomMagicVotePair);
         }
 
         [HttpPut]
@@ -50,12 +60,12 @@ namespace MagicTheVotingAPI
             else
                 pairToModify.CardBVotes++;
 
-            using (StreamWriter file = System.IO.File.CreateText(magicCardsFilePath))
+            using (StreamWriter streamWriterFile = file.CreateText(magicCardsFilePath))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 try
                 {
-                    serializer.Serialize(file, magicVotePairs);
+                    serializer.Serialize(streamWriterFile, magicVotePairs);
                     return Ok(pairToModify);
                 }
                 catch
@@ -67,7 +77,7 @@ namespace MagicTheVotingAPI
 
         private MagicVotePairs GetMagicVotePairsFromJsonFile()
         {
-            string json = System.IO.File.ReadAllText(magicCardsFilePath);
+            string json = file.ReadAllText(magicCardsFilePath);
             MagicVotePairs magicVotePairs = new MagicVotePairs();
             JsonConvert.PopulateObject(json, magicVotePairs);
             return magicVotePairs;

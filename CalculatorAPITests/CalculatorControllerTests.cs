@@ -1,47 +1,38 @@
-using CalculatorAPI;
+﻿using CalculatorAPI;
+using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
-using System;
 
 namespace CalculatorAPITests
 {
-    public class CalculatorControllerTests
+    [TestFixture]
+    class CalculatorControllerTests
     {
+        CalculatorController calculatorController;
 
-        [Test]
-        public void GivenTwoNumbers_ReturnsPercentagesOfTotal()
+        [SetUp]
+        public void SetUp()
         {
-            double[] actual = Calculator.GetPercentagesOfTotal(5, 15);
-            double[] expected = new double[]
-            {
-                25,
-                75
-            };
-            Assert.AreEqual(expected, actual);
+            calculatorController = new CalculatorController();
         }
 
         [Test]
-        [TestCase(-3, 1)]
-        [TestCase(4, -1)]
-        [TestCase(-45, -9)]
-        public void GivenNegativeNumber_ThrowsException(int a, int b)
+        public void GivenTwoNonNegativeNumbers_ReturnsOkHTTPCode()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => Calculator.GetPercentagesOfTotal(a, b));
+            var resultOfTwoPositives = calculatorController.GetPercentagesOfTotal(1, 2);
+            var resultOfTwoZeroes = calculatorController.GetPercentagesOfTotal(0, 0);
+            var resultOfOneZeroOnePositive = calculatorController.GetPercentagesOfTotal(0, 1);
+            Assert.AreEqual(typeof(OkObjectResult), resultOfTwoPositives.Result.GetType());
+            Assert.AreEqual(typeof(OkObjectResult), resultOfTwoZeroes.Result.GetType());
+            Assert.AreEqual(typeof(OkObjectResult), resultOfOneZeroOnePositive.Result.GetType());
         }
 
         [Test]
-        public void GivenTwoValuesOfZero_ReturnsArrayOfZeroes()
+        public void GivenANegativeNumber_ReturnsBadRequestHTTPCode()
         {
-            double[] expected = new double[] { 0, 0 };
-            Assert.AreEqual(expected, Calculator.GetPercentagesOfTotal(0, 0));
-        }
-
-        [Test]
-        public void GivenOneValueOfZeroAndOneGreaterThanZero_ReturnsArrayWithOneValueOfOneAndTheOtherZero()
-        {
-            double[] expected = new double[] { 100, 0 };
-            double[] expectedTwo = new double[] { 0, 100 };
-            Assert.AreEqual(expected, Calculator.GetPercentagesOfTotal(25, 0));
-            Assert.AreEqual(expectedTwo, Calculator.GetPercentagesOfTotal(0, 75));
+            var resultOfOneNegative = calculatorController.GetPercentagesOfTotal(1, -2);
+            var resultOfTwoNegatives = calculatorController.GetPercentagesOfTotal(-2, -2);
+            Assert.AreEqual(typeof(BadRequestResult), resultOfOneNegative.Result.GetType());
+            Assert.AreEqual(typeof(BadRequestResult), resultOfTwoNegatives.Result.GetType());
         }
     }
 }

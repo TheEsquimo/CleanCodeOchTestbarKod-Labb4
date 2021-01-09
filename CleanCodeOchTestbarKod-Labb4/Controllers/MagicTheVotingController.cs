@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 
 namespace CleanCodeOchTestbarKod_Labb4
 {
-    public static class GameController
+    public static class MagicTheVotingController
     {
         public static MagicVotePair CurrentMagicVotePair { get { return currentMagicVotePair; } }
-        public static string CurrentMagicQuote { get { return CurrentMagicQuote; } }
+        public static string CurrentMagicQuote { get { return currentMagicQuote; } }
 
         private static MagicVotePair currentMagicVotePair = GetRandomMagicVotePair().Result;
         private static string currentMagicQuote;
@@ -22,12 +22,6 @@ namespace CleanCodeOchTestbarKod_Labb4
         {
             currentMagicVotePair = GetRandomMagicVotePair().Result;
         }
-        
-        private static async void RegisterVoteOnCurrentVotePair(string cardVotedOn)
-        {
-            var client = new Client(new Uri($"http://magicthevotingapi/magiccards?id={CurrentMagicVotePair.Id}&cardToGetVote={cardVotedOn}"));
-            currentMagicVotePair = await client.PutAsync<MagicVotePair, MagicVotePair>();
-        }
 
         public static async Task<PercentagePair> GetPercentagesDistributonOfVotes()
         {
@@ -35,6 +29,12 @@ namespace CleanCodeOchTestbarKod_Labb4
             double[] percentages = await client.GetAsync<double[]>();
             PercentagePair percentagePair = new PercentagePair(percentages[0], percentages[1]);
             return percentagePair;
+        }
+        
+        private static async void RegisterVoteOnCurrentVotePair(string cardVotedOn)
+        {
+            var client = new Client(new Uri($"http://magicthevotingapi/magiccards?id={CurrentMagicVotePair.Id}&cardToGetVote={cardVotedOn}"));
+            currentMagicVotePair = await client.PutAsync<MagicVotePair, MagicVotePair>();
         }
 
 

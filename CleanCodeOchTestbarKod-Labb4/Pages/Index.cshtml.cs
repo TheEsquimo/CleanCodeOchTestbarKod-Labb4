@@ -18,6 +18,8 @@ namespace CleanCodeOchTestbarKod_Labb4.Pages
         public string CardImageB { get; set; }
         [ViewData]
         public PercentagePair CardVoteDistributionPercentages { get; set; }
+        [ViewData]
+        public string MagicQuote { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -31,15 +33,16 @@ namespace CleanCodeOchTestbarKod_Labb4.Pages
 
         public async Task OnPostUserVoted(string cardVotedOn)
         {
-            GameController.OnUserVoted(cardVotedOn);
-            CardVoteDistributionPercentages = GameController.GetPercentagesDistributonOfVotes().Result;
+            MagicTheVotingController.OnUserVoted(cardVotedOn);
+            CardVoteDistributionPercentages = MagicTheVotingController.GetPercentagesDistributonOfVotes().Result;
             UpdateCardImagesToCurrentCardPair();
+            MagicQuote = MagicTheVotingController.CurrentMagicQuote;
             HasVoted = true;
         }
 
         public async Task OnPostRequestNewCardPair()
         {
-            GameController.OnUserRequestNewCardPair();
+            MagicTheVotingController.OnUserRequestNewCardPair();
             UpdateCardImagesToCurrentCardPair();
             HasVoted = false;
         }
@@ -47,8 +50,8 @@ namespace CleanCodeOchTestbarKod_Labb4.Pages
         private void UpdateCardImagesToCurrentCardPair()
         {
             MagicMultiverseIdConverter multiverseConverter = new MagicMultiverseIdConverter();
-            CardImageA = multiverseConverter.ConvertMultiverseIdToImageLink(GameController.CurrentMagicVotePair.CardA);
-            CardImageB = multiverseConverter.ConvertMultiverseIdToImageLink(GameController.CurrentMagicVotePair.CardB);
+            CardImageA = multiverseConverter.ConvertMultiverseIdToImageLink(MagicTheVotingController.CurrentMagicVotePair.CardA);
+            CardImageB = multiverseConverter.ConvertMultiverseIdToImageLink(MagicTheVotingController.CurrentMagicVotePair.CardB);
         }
     }
 }
