@@ -12,6 +12,7 @@ namespace MagicTheVotingAPI
     public class MagicCardsController : ControllerBase
     {
         private readonly string magicCardsFilePath;
+        private static MagicVotePair lastFetchedMagicPair;
 
         public MagicCardsController()
         {
@@ -31,6 +32,7 @@ namespace MagicTheVotingAPI
 
             Random random = new Random();
             MagicVotePair randomMagicVotePair = magicVotePairs.MagicVotePairList[random.Next(magicVotePairs.MagicVotePairList.Length)];
+            lastFetchedMagicPair = randomMagicVotePair;
             return Ok(randomMagicVotePair);
         }
 
@@ -42,7 +44,10 @@ namespace MagicTheVotingAPI
 
         public async Task<IActionResult> PutMagicVotePair(int id, string cardToGetVote, IFile file, string filePath)
         {
+            if (string.IsNullOrEmpty(cardToGetVote))
+                return BadRequest("Invalid input");
             cardToGetVote = cardToGetVote.ToUpper();
+
             MagicVotePairs magicVotePairs = GetMagicVotePairsFromJsonFile(file);
 
             if (magicVotePairs.MagicVotePairList.Length == 0)
@@ -53,7 +58,7 @@ namespace MagicTheVotingAPI
                 return NotFound();
 
             if (cardToGetVote != "A" && cardToGetVote != "B")
-                return BadRequest("Invalid input of card to vote. Must be either A or B.");
+                return BadRequest("Invalid input of card to vote on. Must be either A or B.");
 
             if (cardToGetVote == "A")
                 pairToModify.CardAVotes++;
@@ -66,7 +71,53 @@ namespace MagicTheVotingAPI
                 try
                 {
                     serializer.Serialize(streamWriterFile, magicVotePairs);
+                    lastFetchedMagicPair = pairToModify;
                     return Ok(pairToModify);
+                }
+                catch
+                {
+                    return StatusCode(500);
+                }
+            }
+        }
+
+        [Route("last-fetched-pair")]
+        [HttpGet]
+        public async Task<ActionResult<MagicVotePair>> GetLastFetchedMagicVotePair()
+        {
+            if (lastFetchedMagicPair == null)
+                return NoContent();
+            return Ok(lastFetchedMagicPair);
+        }
+
+        [Route("undo-last-vote")]
+        [HttpGet]
+        public async Task<ActionResult<MagicVotePair>> UndoLastMagicPairVote(string cardThatWasVotedOn)
+        {
+            if (string.IsNullOrEmpty(cardThatWasVotedOn))
+                return BadRequest("Invalid input");
+            cardThatWasVotedOn = cardThatWasVotedOn.ToUpper();
+
+            if (cardThatWasVotedOn != "A" && cardThatWasVotedOn != "B")
+                return BadRequest("Invalid input of card to undo vote on. Must be either A or B.");
+
+            if (lastFetchedMagicPair == null)
+                return NoContent();
+
+            if (cardThatWasVotedOn == "A")
+                lastFetchedMagicPair.CardAVotes--;
+            else
+                lastFetchedMagicPair.CardBVotes--;
+
+            MagicVotePairs magicVotePairs = GetMagicVotePairsFromJsonFile(new File());
+
+            using (StreamWriter streamWriterFile = new File().CreateText(magicCardsFilePath))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                try
+                {
+                    serializer.Serialize(streamWriterFile, magicVotePairs);
+                    return Ok(lastFetchedMagicPair);
                 }
                 catch
                 {
