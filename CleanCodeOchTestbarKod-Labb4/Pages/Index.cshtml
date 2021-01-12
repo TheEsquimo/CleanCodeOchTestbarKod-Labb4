@@ -34,10 +34,10 @@
             <p>@Model.CardVoteDistributionPercentages.PercentageBWithPercentageSymbol</p>
         </div>
       </div>
-      <p>@Model.MagicQuote</p>
+      <p id="magic-quote">@Model.MagicQuote</p>
       <div class="float-none">
         <form asp-page-handler="RequestNewCardPair">
-          <button>Next</button>
+          <button id="next-button">Next</button>
         </form>
       </div>
     }
