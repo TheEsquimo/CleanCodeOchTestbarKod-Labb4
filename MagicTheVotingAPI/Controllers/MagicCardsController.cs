@@ -13,6 +13,7 @@ namespace MagicTheVotingAPI
     {
         private readonly string magicCardsFilePath;
         private static MagicVotePair lastFetchedMagicPair;
+        private static bool canUndo = false;
 
         public MagicCardsController()
         {
@@ -72,6 +73,7 @@ namespace MagicTheVotingAPI
                 {
                     serializer.Serialize(streamWriterFile, magicVotePairs);
                     lastFetchedMagicPair = pairToModify;
+                    canUndo = true;
                     return Ok(pairToModify);
                 }
                 catch
@@ -91,9 +93,12 @@ namespace MagicTheVotingAPI
         }
 
         [Route("undo-last-vote")]
-        [HttpGet]
+        [HttpPut]
         public async Task<ActionResult<MagicVotePair>> UndoLastMagicPairVote(string cardThatWasVotedOn)
         {
+            if (!canUndo)
+                return NotFound("There's nothing to undo");
+
             if (string.IsNullOrEmpty(cardThatWasVotedOn))
                 return BadRequest("Invalid input");
             cardThatWasVotedOn = cardThatWasVotedOn.ToUpper();
@@ -117,6 +122,7 @@ namespace MagicTheVotingAPI
                 try
                 {
                     serializer.Serialize(streamWriterFile, magicVotePairs);
+                    canUndo = false;
                     return Ok(lastFetchedMagicPair);
                 }
                 catch

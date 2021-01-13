@@ -15,13 +15,11 @@ services:
       context: .
       dockerfile: CalculatorAPI/Dockerfile
 
-
   magicthevotingapi:
     image: ${DOCKER_REGISTRY-}magicthevotingapi
     build:
       context: .
       dockerfile: MagicTheVotingAPI/Dockerfile
-
 
   magicthequotesapi:
     image: ${DOCKER_REGISTRY-}magicthequotesapi
