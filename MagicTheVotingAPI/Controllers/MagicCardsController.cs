@@ -106,15 +106,19 @@ namespace MagicTheVotingAPI
             if (cardThatWasVotedOn != "A" && cardThatWasVotedOn != "B")
                 return BadRequest("Invalid input of card to undo vote on. Must be either A or B.");
 
-            if (lastFetchedMagicPair == null)
+            MagicVotePairs magicVotePairs = GetMagicVotePairsFromJsonFile(new File());
+            if (lastFetchedMagicPair == null || magicVotePairs.MagicVotePairList.Length == 0)
                 return NoContent();
 
-            if (cardThatWasVotedOn == "A")
-                lastFetchedMagicPair.CardAVotes--;
-            else
-                lastFetchedMagicPair.CardBVotes--;
+            MagicVotePair pairToModify = magicVotePairs.MagicVotePairList.Where(votePair => votePair.Id == lastFetchedMagicPair.Id).FirstOrDefault();
+            if (pairToModify == null)
+                return NotFound();
 
-            MagicVotePairs magicVotePairs = GetMagicVotePairsFromJsonFile(new File());
+            if (cardThatWasVotedOn == "A")
+                pairToModify.CardAVotes--;
+            else
+                pairToModify.CardBVotes--;
+
 
             using (StreamWriter streamWriterFile = new File().CreateText(magicCardsFilePath))
             {
@@ -123,7 +127,8 @@ namespace MagicTheVotingAPI
                 {
                     serializer.Serialize(streamWriterFile, magicVotePairs);
                     canUndo = false;
-                    return Ok(lastFetchedMagicPair);
+                    lastFetchedMagicPair = pairToModify;
+                    return Ok(pairToModify);
                 }
                 catch
                 {

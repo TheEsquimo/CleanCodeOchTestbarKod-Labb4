@@ -20,6 +20,8 @@ services:
     build:
       context: .
       dockerfile: MagicTheVotingAPI/Dockerfile
+    ports:
+      - "5000:80"
 
   magicthequotesapi:
     image: ${DOCKER_REGISTRY-}magicthequotesapi
