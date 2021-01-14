@@ -1,5 +1,5 @@
 # CleanCodeOchTestbarKod-Labb4
-# Elvis Sahlén & Charlotte Magnusson
+## Elvis Sahlén & Charlotte Magnusson
 
 Vi har byggt en SPA som visar dig ett par kort från Magic the Gathering. Du kan välja att klicka på en av dem för att rösta på vilket du föredrar. Datan sparas i en JSON-fil i en av våra tre microservices. Man får också se ett citat från ett slumpmässigt Magic the Gathering-kort efter man röstat, och dessutom procentfördelningen mellan korten baserat på alla röster som gjorts.
 
@@ -10,3 +10,8 @@ En av våra microservices är en kalkylator, som innehåller en funktion som tar
 Magic the Voting API är en av våra microservices som innehåller data för par av Magic the Gathering-kort och dess röstfördelning. Det är byggt med REST-standard som gör det enkelt att få ut slumpmässiga par av kort och att lägga till en röst på ett specifikt par. Detta sparas i en JSON-fil då det är enkelt och tar lite plats.
 
 Magic the Quotes API är vår tredje microservice som innehåller en lista av citat från Magic the Gathering-kort som också sparas i en JSON-fil. Denna är också byggt med REST-standard som låter dig få ut ett slumpmässigt citat från JSON-filen.
+
+**Note: Projektet som heter CleanCodeOchTestbarKod-Labb4 är frontendprojektet.**
+
+# Labb 5 End-to-End-Test
+Labb 5 ligger på en egen branch vid namn "end-to-end-testing". Testfilen heter votingTests.spec.js och ligger i mappen "e2etests" i solutionmappen som heter "CleanCodeOchTestbarKod-Labb4". Kör cypress open när du är i e2etests-mappen. Starta projektet via Docker Compose.
